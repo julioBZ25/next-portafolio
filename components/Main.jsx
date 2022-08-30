@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 import { AiOutlineMail } from 'react-icons/ai'
 import { BsFillPersonLinesFill } from 'react-icons/bs'
@@ -21,18 +22,26 @@ const Main = () => {
             I'm a front end web developer specializing in building exceptional digital experiences. Currently, I'm focused on building responsive front-end web applications while learing back-end technologies.
           </p>
           <div className='flex items-center justify-between max-w-[330px] m-auto py-4'>
-            <div className='rounded-full shadow-lg shadow-gray-400 p-6 cursor-pointer hover:scale-110 ease-in duration-300'>
-              <FaLinkedinIn/>
-            </div>
-            <div className='rounded-full shadow-lg shadow-gray-400 p-6 cursor-pointer hover:scale-110 ease-in duration-300'>
-              <FaGithub/>
-            </div>
-            <div className='rounded-full shadow-lg shadow-gray-400 p-6 cursor-pointer hover:scale-110 ease-in duration-300'>
-              <AiOutlineMail/>
-            </div>
-            <div className='rounded-full shadow-lg shadow-gray-400 p-6 cursor-pointer hover:scale-110 ease-in duration-300'>
-              <BsFillPersonLinesFill/>
-            </div>
+            <a href="https://www.linkedin.com/in/jbzuloaga/" target='_blank' rel='noreferrer'>
+              <div className='rounded-full shadow-lg shadow-gray-400 p-6 cursor-pointer hover:scale-110 ease-in duration-300'>
+                <FaLinkedinIn />
+              </div>
+            </a>
+            <a href="https://github.com/julioBZ25" target='_blank' rel='noreferrer'>
+              <div className='rounded-full shadow-lg shadow-gray-400 p-6 cursor-pointer hover:scale-110 ease-in duration-300'>
+                <FaGithub />
+              </div>
+            </a>
+            <Link href='/#contact'>
+              <div className='rounded-full shadow-lg shadow-gray-400 p-6 cursor-pointer hover:scale-110 ease-in duration-300'>
+                <AiOutlineMail />
+              </div>
+            </Link>
+            <Link href='/Resume'>
+              <div className='rounded-full shadow-lg shadow-gray-400 p-6 cursor-pointer hover:scale-110 ease-in duration-300'>
+                <BsFillPersonLinesFill />
+              </div>
+            </Link>
           </div>
         </div>
       </div>
