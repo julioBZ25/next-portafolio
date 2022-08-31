@@ -1,11 +1,49 @@
 import Link from 'next/link'
-import React from 'react'
+import React, { useState } from 'react'
 import { AiOutlineMail } from 'react-icons/ai'
 import { BsFillPersonLinesFill } from 'react-icons/bs'
 import { FaGithub, FaLinkedinIn } from 'react-icons/fa'
 import {HiOutlineChevronDoubleUp, HiOutLineChevronDoubleUp} from 'react-icons/hi'
 
 const Contact = () => {
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
+
+  const handleNameChange = (e) => setName(e.target.value)
+  const handlePhoneChange = (e) => setPhone(e.target.value)
+  const handleEmailChange = (e) => setEmail(e.target.value)
+  const handleSubjectChange = (e) => setSubject(e.target.value)
+  const handleMessageChange = (e) => setMessage(e.target.value)
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // let isValidForm = handleValidation();
+
+    const res = await fetch("/api/sendgrid", {
+      body: JSON.stringify({
+        email: email,
+        subject: subject,
+        message: `${name}, ${phone} <br> ${message}`,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+    });
+
+    const { error } = await res.json();
+    if (error) {
+      console.log(error);
+      return;
+    }
+    console.log(name, phone, email, subject, message);
+  };
+
   return (
     <div id='contact' className='w-full lg:h-screen'>
       <div className='max-w-[1240px] m-auto px-2 py-16 w-full'>
@@ -49,26 +87,26 @@ const Contact = () => {
                 <div className='grid md:grid-cols-2 gap-4 w-full py-2'>
                   <div className='flex flex-col'>
                     <label className='uppercase text-sm py-2'>Name</label>
-                    <input className='border-2 rounded-lg p-3 flex border-gray-300' type="text" />
+                    <input onChange={handleNameChange} value={name} className='border-2 rounded-lg p-3 flex border-gray-300' type="text" />
                   </div>
                   <div className='flex flex-col'>
                     <label className='uppercase text-sm py-2'>Phone Number</label>
-                    <input className='border-2 rounded-lg p-3 flex border-gray-300' type="text" />
+                    <input onChange={handlePhoneChange} value={phone} className='border-2 rounded-lg p-3 flex border-gray-300' type="text" />
                   </div>
                 </div>
                 <div className='flex flex-col py-2'>
                   <label className='uppercase text-sm py-2'>Email</label>
-                  <input className='border-2 rounded-lg p-3 flex border-gray-300' type="email" />
+                  <input onChange={handleEmailChange} value={email} className='border-2 rounded-lg p-3 flex border-gray-300' type="email" />
                 </div>
                 <div className='flex flex-col py-2'>
                   <label className='uppercase text-sm py-2'>Subject</label>
-                  <input className='border-2 rounded-lg p-3 flex border-gray-300' type="text" />
+                  <input onChange={handleSubjectChange} value={subject} className='border-2 rounded-lg p-3 flex border-gray-300' type="text" />
                 </div>
                 <div className='flex flex-col py-2'>
                   <label className='uppercase text-sm py-2'>Message</label>
-                  <textarea className='border-2 rounded-lg p-3 border-gray-300' rows='10'></textarea>
+                  <textarea onChange={handleMessageChange} value={message} className='border-2 rounded-lg p-3 border-gray-300' rows='10'></textarea>
                 </div>
-                <button className='w-full p-4 text-gray-100 mt-4'>Send Message</button>
+                <button onClick={handleSubmit} className='w-full p-4 text-gray-100 mt-4'>Send Message</button>
               </form>
             </div>
           </div>
